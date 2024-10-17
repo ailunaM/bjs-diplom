@@ -39,6 +39,7 @@ class ApiConnector {
 
     asyncPart()
       .then(({ responseBody }) => {
+        // (responseBody) => {}
         callback(responseBody);
       })
       .catch((e) => {

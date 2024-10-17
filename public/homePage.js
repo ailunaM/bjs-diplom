@@ -68,12 +68,29 @@ ApiConnector.getFavorites((responseBody) => {
     moneyManager.updateUsersList(responseBody.data);
   }
 });
-
-// ApiConnector.addUserCallback((responseBody) => {
-//     if(responseBody.success === true){
-//         ProfileWidget.showProfile(responseBody.data);
-//         moneyManager.setMessage(true, 'успех');
-//     }else {
-//       moneyManager.setMessage(false, responseBody.error);
-//     }
-// });
+favoritesWidget.addUserCallback = (data) => {
+  ApiConnector.addUserToFavorites(data, (responseBody) => {
+    if (responseBody.success === true) {
+      favoritesWidget.clearTable();
+      favoritesWidget.fillTable(responseBody.data);
+      moneyManager.updateUsersList(responseBody.data);
+      ProfileWidget.showProfile(responseBody.data);
+      favoritesWidget.setMessage(true, 'успех');
+    } else {
+      favoritesWidget.setMessage(false, responseBody.error);
+    }
+  });
+};
+favoritesWidget.removeUserCallback = (data) => {
+  ApiConnector.removeUserFromFavorites(data, (responseBody) => {
+    if (responseBody.success === true) {
+      favoritesWidget.clearTable();
+      favoritesWidget.fillTable(responseBody.data);
+      moneyManager.updateUsersList(responseBody.data);
+      ProfileWidget.showProfile(responseBody.data);
+      favoritesWidget.setMessage(true, 'успех');
+    } else {
+      favoritesWidget.setMessage(false, responseBody.error);
+    }
+  });
+};
